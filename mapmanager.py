@@ -3,7 +3,7 @@ class MapManager():
     def __init__(self):
         self.startNew()
         self.model = "block.egg"
-        self.texture = "block.png"
+        self.texture = "brick.png"
 
         self.color = (0.1, 0.5, 0.9, 1)#rgba
 
