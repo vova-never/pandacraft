@@ -15,7 +15,7 @@ class Hero():
         self.CameraBind()
 
         self.acceptEvents()
-
+#-------прив'язування/відв'язування камери-----
     def CameraBind(self):
         base.disableMouse()
         base.camera.reparentTo(self.hero)
@@ -32,13 +32,13 @@ class Hero():
         base.mouseInterfaceNode.setPos((-pos[0], -pos[1], -pos[-2]-1))
 
         self.cameraOn = False
-        
+#------зміна режиму камери-----      
     def changeMode(self):
         if self.cameraOn:
             self.cameraUnBind()
         else:
             self.CameraBind()
-
+#-------поворот камери--------
     def turnLeft(self):
         angle = self.hero.getH()
         angle += 5
@@ -56,7 +56,7 @@ class Hero():
         angle += 5
         self.hero.setP(angle)
 
-
+#---------рух гравця----------
     def just_move(self, angle):
         pos = self.lookAt(angle)
         self.hero.setPos(pos)
@@ -132,7 +132,7 @@ class Hero():
         angle = (self.hero.getH()+270) % 360
         self.move_to(angle)
 
-
+#------------приводимо функції вище в дію--------
     def acceptEvents(self):
         base.accept("c", self.changeMode)
 
@@ -161,7 +161,7 @@ class Hero():
         base.accept(right_key+"-repeat",self.right)
 
 
-
+#--------вказуємо на яяку кнопку має виконуватись функція---------
 change_mode_key = "c"
 
 turn_left_key = "arrow_left"
