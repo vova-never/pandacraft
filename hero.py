@@ -33,7 +33,7 @@ class Hero():
 
         self.cameraOn = False
 #------зміна режиму камери-----      
-    def changeMode(self):
+    def changeCamera(self):
         if self.cameraOn:
             self.cameraUnBind()
         else:
@@ -62,13 +62,30 @@ class Hero():
         self.hero.setPos(pos)
 
     def try_move(self, angle):
-        ...
+        pos = self.lookAt(angle)
+        if self.land.isEmpty(pos):
+            pos = self.land.findHighestEmpty(pos)
+            self.hero.setPos(pos)
+        else:
+            pos = pos[0], pos[1], pos[2]+1
+            if self.land.isEmpty:
+                self.hero.setPos(pos)
 
     def move_to(self, angle):
         if self.spectatorMode:
             self.just_move(angle)
         else:
             self.try_move(angle)
+
+
+    def changeMode(self):
+        #if self.spectatorMode:
+        #   self.spectatorMode = False
+        #else:
+        #   self.spectatorMode = True
+
+        self.spectatorMode = not self.spectatorMode
+        print("A")
 
     def lookAt(self,angle):
         x = round(self.hero.getX())
@@ -132,9 +149,26 @@ class Hero():
         angle = (self.hero.getH()+270) % 360
         self.move_to(angle)
 
+
+    def Up(self):
+        if self.cameraOn:
+        #отримати поточну зет координату гравця
+            hero_height = (self.hero.getZ())
+        #додати до неї 1
+            hero_height = hero_height+1
+        #встановити зет координату
+            self.hero.setZ(1)
+            
+        #hero -> getX, getY, getZ
+        #hero -> setX, setY, setZ
+        
+    
+    def down(self):
+        ...
 #------------приводимо функції вище в дію--------
     def acceptEvents(self):
-        base.accept("c", self.changeMode)
+        base.accept(change_camera_key, self.changeCamera)
+        base.accept(change_mode_key, self.changeMode)
 
         base.accept(turn_left_key,self.turnLeft)
         base.accept(turn_left_key+"-repeat",self.turnLeft)
@@ -160,9 +194,14 @@ class Hero():
         base.accept(right_key,self.right)
         base.accept(right_key+"-repeat",self.right)
 
+        base.accept(up_key,self.Up)
+        base.accept(up_key+"-repeat",self.Up)
 
-#--------вказуємо на яяку кнопку має виконуватись функція---------
-change_mode_key = "c"
+
+#--------вказуємо на яку кнопку має виконуватись функція---------
+change_camera_key = "c"
+
+change_mode_key = "z"
 
 turn_left_key = "arrow_left"
 turn_right_key = "arrow_right"
@@ -173,3 +212,6 @@ forward_key = "w"
 back_key = "s"
 left_key = "a"
 right_key = "d"
+up_key = "e"
+
+
